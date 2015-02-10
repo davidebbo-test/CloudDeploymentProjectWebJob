@@ -1,0 +1,15 @@
+﻿{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webSiteName": {
+            "value": null
+        },
+        "webSiteHostingPlanName": {
+            "value": null
+        },
+        "webSiteLocation": {
+            "value": null
+        }
+    }
+}
