@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "webSiteName": {
-            "value": null
+            "value": "TmpCloudDeploy"
         },
         "webSiteHostingPlanName": {
-            "value": null
+            "value": "TmpCloudDeploy"
         },
         "webSiteLocation": {
-            "value": null
+            "value": "West US"
         }
     }
 }
