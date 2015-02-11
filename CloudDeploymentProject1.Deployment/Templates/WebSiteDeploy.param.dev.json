@@ -10,6 +10,9 @@
         },
         "webSiteLocation": {
             "value": "West US"
+        },
+        "jobCollectionName": {
+            "value": "CloudDeploymentJobColl"
         }
     }
 }

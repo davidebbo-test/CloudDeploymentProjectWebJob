@@ -48,6 +48,9 @@
                 "2"
             ],
             "defaultValue": "0"
+        },
+        "jobCollectionName": {
+            "type": "string"
         }
     },
     "resources": [
@@ -100,6 +103,62 @@
                 "workerSize": "[parameters('webSiteHostingPlanWorkerSize')]",
                 "numberOfWorkers": 1
             }
+        },
+        {
+            "apiVersion": "2014-08-01-preview",
+            "name": "[parameters('jobCollectionName')]",
+            "type": "Microsoft.Scheduler/jobCollections",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/Sites', parameters('webSiteName'))]"
+            ],
+            "location": "[parameters('webSiteLocation')]",
+            "properties": {
+                "sku": {
+                    "name": "standard"
+                },
+                "quota": {
+                    "maxJobCount": "10",
+                    "maxRecurrence": {
+                        "Frequency": "minute",
+                        "interval": "1"
+                    }
+                }
+            },
+            "resources": [
+                {
+                    "apiVersion": "2014-08-01-preview",
+                    "name": "DavidJob",
+                    "type": "jobs",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Scheduler/jobCollections', parameters('jobCollectionName'))]"
+                    ],
+                    "properties": {
+                        "startTime": "2015-02-10T00:08:00Z",
+                        "action": {
+                            "request": {
+                                "uri": "[concat(list(resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingcredentials'), '2014-06-01').properties.scmUri,'/api/triggeredjobs/MyScheduledWebJob/run')]",
+                                "method": "POST",
+                                "authentication": {
+                                    "type": "Basic",
+                                    "username": "[list(resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingcredentials'), '2014-06-01').properties.publishingUserName]",
+                                    "password": "[list(resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingcredentials'), '2014-06-01').properties.publishingPassword]"
+                                }
+                            },
+                            "type": "http",
+                            "retryPolicy": {
+                                "retryType": "Fixed",
+                                "retryInterval": "PT1M",
+                                "retryCount": 2
+                            }
+                        },
+                        "state": "enabled",
+                        "recurrence": {
+                            "frequency": "minute",
+                            "interval": 1
+                        }
+                    }
+                }
+            ]
         }
     ]
 }
