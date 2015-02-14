@@ -136,7 +136,7 @@
                         "startTime": "2015-02-10T00:08:00Z",
                         "action": {
                             "request": {
-                                "uri": "[concat(list(resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingcredentials'), '2014-06-01').properties.scmUri,'/api/triggeredjobs/MyScheduledWebJob/run')]",
+                                "uri": "[concat('https://',reference(resourceId('Microsoft.Web/Sites',parameters('webSiteName'))).enabledHostNames[1],'/api/triggeredjobs/MyTriggeredJob/run')]",
                                 "method": "POST",
                                 "authentication": {
                                     "type": "Basic",
