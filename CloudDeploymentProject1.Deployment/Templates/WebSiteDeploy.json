@@ -53,6 +53,9 @@
             "type": "string"
         }
     },
+    "variables": {
+        "webSitePubCreds": "[resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingCredentials')]"
+    },
     "resources": [
         {
             "apiVersion": "2014-06-01",
@@ -140,8 +143,8 @@
                                 "method": "POST",
                                 "authentication": {
                                     "type": "Basic",
-                                    "username": "[list(resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingcredentials'), '2014-06-01').properties.publishingUserName]",
-                                    "password": "[list(resourceId('Microsoft.Web/sites/config', parameters('webSiteName'), 'publishingcredentials'), '2014-06-01').properties.publishingPassword]"
+                                    "username": "[list(variables('webSitePubCreds'), '2014-11-01').properties.publishingUserName]",
+                                    "password": "[list(variables('webSitePubCreds'), '2014-11-01').properties.publishingPassword]"
                                 }
                             },
                             "type": "http",
